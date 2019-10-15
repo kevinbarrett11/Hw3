@@ -20,8 +20,12 @@ char **split_strings(char * input){
     return arr;
 }
 
+void sigint_handler(){
+    printf("caught sigint");
+}
+
 int main() {
-    char *input;
+    char *input = malloc(20);
     char **args;
     int status = 0;
 
@@ -30,6 +34,8 @@ int main() {
         printf("CS361 >");
         fgets(input, 500, stdin);
         args = split_strings(input);
+
+        signal(SIGINT, sigint_handler);
 
         if(args[0] == NULL){
             continue;
@@ -41,7 +47,7 @@ int main() {
         pid_t forkid = fork();
         if(forkid == 0){
             execvp(args[0], args);
-            printf("Error");
+            printf("Error\n");
             exit(1);
 
         } else {
