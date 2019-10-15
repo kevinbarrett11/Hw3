@@ -50,7 +50,15 @@ int main() {
         }
 
         pid_t forkid = fork();  //forks a proccess
-        if(forkid == 0){  
+
+
+        if (forkid == -1) {
+            perror("fork");
+            exit(EXIT_FAILURE);
+        }
+
+
+        if(forkid == 0){
             execvp(args[0], args); //runs first command and then arguments of the rest
             printf("Error\n");  //if this is reached returns an error
             exit(1);  //exits with one
