@@ -23,6 +23,9 @@ char **split_strings(char * input){
 void sigint_handler(){
     printf("caught sigint");
 }
+void sigtstp_handler(){
+    printf("caught sigstp");
+}
 
 int main() {
     char *input = malloc(20);
@@ -36,6 +39,7 @@ int main() {
         args = split_strings(input);
 
         signal(SIGINT, sigint_handler);
+        signal(SIGTSTP , sigtstp_handler);
 
         if(args[0] == NULL){
             continue;
